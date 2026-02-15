@@ -21,8 +21,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const newX = Math.random() * (winWidth - btnWidth - 40) + 20;
         const newY = Math.random() * (winHeight - btnHeight - 40) + 20;
 
-        // Apply new position using fixed positioning to break out of layout
-        u16Btn.style.position = 'fixed';
+        // Avoid layout jump by adding a placeholder on first move
+        if (u16Btn.style.position !== 'fixed') {
+            const placeholder = document.createElement('div');
+            placeholder.style.width = `${btnWidth}px`;
+            placeholder.style.height = `${btnHeight}px`;
+            placeholder.style.visibility = 'hidden';
+            u16Btn.parentNode.insertBefore(placeholder, u16Btn);
+            u16Btn.style.position = 'fixed';
+        }
         u16Btn.style.left = `${newX}px`;
         u16Btn.style.top = `${newY}px`;
 
@@ -49,8 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
         title.style.display = 'none';
         subtitle.style.display = 'none';
 
-        // If the U16 button was flying around, hide it too
-        u16Btn.style.display = 'none';
+
 
         // Show result
         result.classList.remove('hidden');
