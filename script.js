@@ -1,75 +1,58 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const noBtn = document.getElementById('noBtn');
-    const yesBtn = document.getElementById('yesBtn');
-    const card = document.getElementById('mainCard');
-    const celebration = document.getElementById('celebration');
-    const confettiCanvas = document.getElementById('confetti-canvas');
+    const u16Btn = document.getElementById('u16Btn');
+    const studentBtn = document.getElementById('studentBtn');
+    const result = document.getElementById('result');
+    const choicesBox = document.querySelector('.choices-box');
+    const title = document.querySelector('h1');
+    const subtitle = document.querySelector('.subtitle');
 
-    // Button "No" interaction
-    const moveButton = () => {
-        // Calculate available area within the card or viewport
-        // Moving it randomly within the window but ensuring it stays visible
-        const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-        const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-        
-        noBtn.style.position = 'fixed';
-        noBtn.style.left = `${x}px`;
-        noBtn.style.top = `${y}px`;
+    // Function to move the U16 button randomly
+    const runAway = (e) => {
+        // Get window dimensions
+        const winWidth = window.innerWidth;
+        const winHeight = window.innerHeight;
+
+        // Button dimensions
+        const btnWidth = u16Btn.offsetWidth;
+        const btnHeight = u16Btn.offsetHeight;
+
+        // Calculate new random position
+        // Ensure it stays within viewport with some padding
+        const newX = Math.random() * (winWidth - btnWidth - 40) + 20;
+        const newY = Math.random() * (winHeight - btnHeight - 40) + 20;
+
+        // Apply new position using fixed positioning to break out of layout
+        u16Btn.style.position = 'fixed';
+        u16Btn.style.left = `${newX}px`;
+        u16Btn.style.top = `${newY}px`;
+
+        // Add a funny rotation
+        const rotation = (Math.random() - 0.5) * 40;
+        u16Btn.style.transform = `rotate(${rotation}deg)`;
     };
 
-    noBtn.addEventListener('mouseover', moveButton);
-    noBtn.addEventListener('touchstart', (e) => {
-        e.preventDefault(); // Prevent click on touch
-        moveButton();
+    // Events for U16 button
+    u16Btn.addEventListener('mouseover', runAway);
+    u16Btn.addEventListener('touchstart', (e) => {
+        e.preventDefault(); // Prevent accidental selection on touch
+        runAway();
     });
-    noBtn.addEventListener('click', (e) => {
+    u16Btn.addEventListener('click', (e) => {
         e.preventDefault();
-        moveButton();
+        runAway(); // Just in case they manage to click
     });
 
-    // Button "Yes" interaction
-    yesBtn.addEventListener('click', () => {
-        // Hide card
-        card.style.opacity = '0';
-        setTimeout(() => {
-            card.style.display = 'none';
-        }, 500);
+    // Event for Student button (Success)
+    studentBtn.addEventListener('click', () => {
+        // Hide the choice UI
+        choicesBox.style.display = 'none';
+        title.style.display = 'none';
+        subtitle.style.display = 'none';
 
-        // Show celebration
-        celebration.classList.remove('hidden');
-        // Small delay to allow display change to register before opacity transition
-        setTimeout(() => {
-            celebration.classList.add('visible');
-            triggerConfetti();
-        }, 50);
+        // If the U16 button was flying around, hide it too
+        u16Btn.style.display = 'none';
+
+        // Show result
+        result.classList.remove('hidden');
     });
-
-    // Confetti logic
-    const triggerConfetti = () => {
-        var myConfetti = confetti.create(confettiCanvas, {
-            resize: true,
-            useWorker: true
-        });
-
-        var duration = 15 * 1000;
-        var animationEnd = Date.now() + duration;
-        var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-
-        function randomInRange(min, max) {
-            return Math.random() * (max - min) + min;
-        }
-
-        var interval = setInterval(function() {
-            var timeLeft = animationEnd - Date.now();
-
-            if (timeLeft <= 0) {
-                return clearInterval(interval);
-            }
-
-            var particleCount = 50 * (timeLeft / duration);
-            // since particles fall down, start a bit higher than random
-            myConfetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
-            myConfetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
-        }, 250);
-    };
 });
