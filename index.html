@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pour ma Valentine ❤️</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-animation">
+        <div class="heart-bg"></div>
+        <div class="heart-bg"></div>
+        <div class="heart-bg"></div>
+        <div class="heart-bg"></div>
+        <div class="heart-bg"></div>
+    </div>
+
+    <div class="card-container" id="mainCard">
+        <div class="card-content">
+            <h1 class="title">Ma Chérie...</h1>
+            <p class="message">Tu rends mes jounées plus belles et mon cœur plus léger. <br>Je n'imagine pas ma vie sans toi.</p>
+            <h2 class="question">Veux-tu être ma Valentine ?</h2>
+            
+            <div class="buttons-container">
+                <button id="yesBtn" class="btn btn-yes">OUI ! ❤️</button>
+                <button id="noBtn" class="btn btn-no">Non...</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="celebration" class="hidden">
+        <div class="celebration-content">
+            <h1>J'étais sûr que tu dirais OUI ! 💖</h1>
+            <p>Je t'aime !</p>
+        </div>
+        <canvas id="confetti-canvas"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
